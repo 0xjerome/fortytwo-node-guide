@@ -1,124 +1,129 @@
-Perfect — your code is now live on GitHub! 🚀
-Repo: [github.com/0xjerome/fortytwo-node-guide](https://github.com/0xjerome/fortytwo-node-guide)
+# 🧠 Fortytwo Node Setup Guide (Linux, No `sudo`)
+
+Fortytwo is a decentralized AI protocol that harnesses idle compute power from devices around the world to run AI inference workloads. By installing and running a Fortytwo node, you contribute to the network and earn rewards in the form of Points based on your device's resources.
 
 ---
 
-### ✅ Next Step: Add a Clear `README.md`
+## 🌐 Official Links
 
-Here’s a complete `README.md` template you can use for your Fortytwo Node Guide repo:
-
----
-
-#### 📂 `README.md`
-
-````markdown
-# 🧠 Fortytwo Node Guide
-
-This guide helps you set up and run a Fortytwo Node on a Linux (Ubuntu/Debian) server — no `sudo` access required.
+- Website: [https://fortytwo.network](https://fortytwo.network)
+- Discord: [https://discord.gg/fortytwo](https://discord.gg/fortytwo)
+- VPS Provider (Used in this guide): [https://compute.hivenet.com](https://compute.hivenet.com)
 
 ---
 
-## 📌 What is Fortytwo?
+## ✅ Requirements (Linux Only)
 
-Fortytwo is a decentralized AI protocol built on swarm intelligence — where small AI models run across a distributed network of user-contributed devices. Instead of relying on centralized data centers, Fortytwo scales AI using idle resources from your system.
-
-By running a node, you contribute compute power and earn rewards (in Points) based on your device’s performance.
-
----
-
-## ⚙️ System Requirements (Linux Only)
+Ensure your machine meets the following minimum requirements before installing Fortytwo:
 
 - **OS**: Ubuntu 20.04+ or Debian 10+
-- **CPU**: 8-core processor
-- **RAM**: 16 GB+
+- **CPU**: 8-core or better
+- **RAM**: 16 GB minimum
 - **GPU**: Nvidia RTX 3060 or better
-- **Storage**: 20 GB+ free SSD (NVMe preferred)
-- **Network**: Minimum 10 Mbps up/down
-- **Other**: Latest NVIDIA drivers installed
+- **Storage**: 20+ GB free SSD (preferably NVMe)
+- **Network**: Stable 10 Mbps upload/download
+- **Privileges**: No `sudo` access required
 
 ---
 
-## 🧪 Step-by-Step Installation (No `sudo` required)
+## 🛠️ Step-by-Step Installation (No sudo)
 
 ```bash
-# 1. Create a working directory
+# 1. Create and enter the install directory
 mkdir -p ~/Fortytwo && cd ~/Fortytwo
 
-# 2. Download the app
+# 2. Download the node zip
 curl -L -o fortytwo-console-app.zip https://github.com/Fortytwo-Network/fortytwo-console-app/archive/refs/heads/main.zip
 
-# 3. Extract using Python (no unzip needed)
+# 3. Extract using Python (since unzip may not be installed)
 python3 -m zipfile -e fortytwo-console-app.zip fortytwo-console-app-main
 
-# 4. Enter directory
+# 4. Enter the extracted folder
 cd fortytwo-console-app-main
 
-# 5. Make the script executable and run it
+# 5. Make script executable and run
 chmod +x linux.sh && ./linux.sh
 ````
 
 ---
 
-## 💡 Recommended: Run in Background with `tmux`
+## 🖥️ Running the Node in Background (with `tmux`)
 
-If `tmux` isn’t installed and you don’t have `sudo`, do this:
+If you don’t have `sudo` and need to keep the node running after you log out:
+
+1. **Install tmux manually (no sudo)**
+   Run from home dir:
+
+   ```bash
+   cd ~
+   curl -LO https://github.com/tmux/tmux/releases/download/3.3a/tmux-3.3a.tar.gz
+   tar -xzf tmux-3.3a.tar.gz
+   cd tmux-3.3a
+   ./configure --prefix=$HOME/.local
+   make && make install
+   ```
+
+2. **Add tmux to PATH**
+
+   ```bash
+   export PATH=$HOME/.local/bin:$PATH
+   ```
+
+3. **Start the node inside tmux**
+
+   ```bash
+   tmux new -s node
+   cd ~/Fortytwo/fortytwo-console-app-main
+   ./linux.sh
+   ```
+
+4. **Detach from tmux (keep node running)**
+   Press: `Ctrl + B`, then `D`
+
+5. **Reconnect later**
+
+   ```bash
+   tmux attach -t node
+   ```
+
+---
+
+## 🧠 Node Model Selection
+
+During setup, you'll be asked to select your node's specialization. For **high rewards**, we recommend:
+
+```
+4 ⬢ PROGRAMMING & ALGORITHMS - OlympicCoder 32B Q4
+```
+
+This model uses \~20GB VRAM and is suitable if your GPU is RTX 4090 or similar.
+
+---
+
+## ❌ Stopping the Node
+
+If you're inside the tmux session, press:
 
 ```bash
-# 1. Download prebuilt tmux binary
-curl -LO https://github.com/nelsonenzo/tmux-appimage/releases/download/v3.3a/tmux.appimage
-chmod +x tmux.appimage
-./tmux.appimage
+Ctrl + C
 ```
 
-Inside tmux, start the node and detach:
+Or simply kill the session:
 
 ```bash
-# Start session
-./tmux.appimage new-session -s node
-
-# Inside session
-cd ~/Fortytwo/fortytwo-console-app-main
-./fortytwo-console-app
-# Press Ctrl+B then D to detach
-```
-
-To reattach later:
-
-```bash
-./tmux.appimage attach-session -t node
+tmux kill-session -t node
 ```
 
 ---
 
-## 🧠 Choose Your Specialization
+## 🤝 Join the Community
 
-When prompted, select one of the heavy-tier specializations (e.g., `4` for *Programming & Algorithms* with OlympicCoder).
-
----
-
-## 🛑 Stop the Node
-
-In your tmux session, just press:
-
-```
-Ctrl+C
-```
+* Discord: [https://discord.gg/fortytwo](https://discord.gg/fortytwo)
 
 ---
 
-## 📞 Support
+## 💡 Credits
 
-Join the [Fortytwo Discord](https://discord.gg/fortytwo-ai) and look for the node support channel.
-
-```
-
----
-
-Would you like me to add this file directly to your repo with a commit message, or do you want to copy-paste it yourself?
-
-Then we’ll write the X post right after that.
-```
-
-
+This guide is maintained by the community. VPS used in this guide is from [HiveNet Compute](https://compute.hivenet.com).
 
 
